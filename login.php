@@ -12,6 +12,8 @@ if(isset($_POST['submit']))
 
     if(mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_assoc($result);
+
+
         if(($row['user_role'] ?? '') =='admin'){
 
         $_SESSION['user_email'] = $email;
@@ -22,6 +24,7 @@ if(isset($_POST['submit']))
         exit;
         }
         else if(($row['user_role'] ?? '') =='user'){
+        $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_email'] = $email;
         $_SESSION['user_role'] = 'user'; 
         $_SESSION['user_name'] = $row['name'];

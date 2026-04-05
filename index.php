@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +8,7 @@ session_start();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Ecom</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 *{
@@ -20,33 +22,6 @@ body{
     background:#f4f6fb;
 }
 
-/* ===== NAVBAR ===== */
-nav{
-    background:linear-gradient(to right,#2f3375,#4b50d6);
-    padding:28px 70px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-}
-nav h2{
-    color:#fff;
-    font-size:28px;
-}
-nav ul{
-    list-style:none;
-    display:flex;
-    gap:32px;
-}
-nav ul li a{
-    color:#fff;
-    text-decoration:none;
-    font-size:16px;
-    font-weight:500;
-}
-nav ul li a:hover{
-    opacity:0.8;
-}
 
 /* ===== HERO (PROFESSIONAL) ===== */
 .hero{
@@ -149,36 +124,7 @@ nav ul li a:hover{
     background:#2f3375;
 }
 
-/* ===== FOOTER ===== */
-footer{
-    background:#0f0f1a;
-    color:#ccc;
-    padding:80px 70px;
-}
-.footer-grid{
-    max-width:1200px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:45px;
-}
-footer h4{
-    color:white;
-    margin-bottom:20px;
-}
-footer ul{
-    list-style:none;
-}
-footer ul li{
-    margin-bottom:12px;
-    font-size:14px;
-}
-.copy{
-    text-align:center;
-    margin-top:55px;
-    font-size:14px;
-    color:#aaa;
-}
+
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:992px){
@@ -187,14 +133,8 @@ footer ul li{
     }
 }
 @media(max-width:600px){
-    nav{
-        justify-content:center;
-        gap:20px;
-    }
-    nav ul{
-        flex-wrap:wrap;
-        justify-content:center;
-    }
+    
+    
     .product-grid{
         grid-template-columns:1fr;
     }
@@ -208,24 +148,9 @@ footer ul li{
 <body>
 
 <!-- NAVBAR -->
-
-<nav>
-    <h2>My Ecom</h2>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Contact</a></li>
-        
-        <?php if (isset($_SESSION['user_email'])): ?>
-            <li style="font-weight: bold; color: white; font-size: 16px;">welcome, <?php echo $_SESSION['user_name'] ?? 'Guest'; ?></li>
-            <li><a class="logout_btn" href="logout.php">Logout</a></li>
-            <li><a href="admin/dashboard.php">dashboard</a></li>
-        <?php else: ?>
-            <li><a href="register.php">Register</a></li>
-            <li><a href="login.php">Login</a></li>
-        <?php endif; ?>
-    </ul>
-</nav>
+<?php
+include 'header.php';
+?>
 
 <!-- HERO -->
 <section class="hero">
@@ -238,7 +163,7 @@ footer ul li{
 </section>
 
 <!-- PRODUCTS -->
-<section class="products">
+<section class="products" id="products">
     <h2>Our Products</h2>
 
     <div class="product-grid">
@@ -257,44 +182,9 @@ footer ul li{
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-grid">
-        <div>
-            <h4>Services</h4>
-            <ul>
-                <li>Web Development</li>
-                <li>App Development</li>
-                <li>Digital Marketing</li>
-            </ul>
-        </div>
-        <div>
-            <h4>Social</h4>
-            <ul>
-                <li>Facebook</li>
-                <li>Instagram</li>
-                <li>Twitter</li>
-            </ul>
-        </div>
-        <div>
-            <h4>Quick Links</h4>
-            <ul>
-                <li>Home</li>
-                <li>Products</li>
-                <li>Contact</li>
-            </ul>
-        </div>
-        <div>
-            <h4>Contact</h4>
-            <ul>
-                <li>Kathmandu, Nepal</li>
-                <li>info@gmail.com</li>
-                <li>98XXXXXXXX</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="copy">
-        ©️ 2026 My Ecom. All Rights Reserved.
-    </div>
+    <?php
+    include 'footer.php';
+    ?>
 </footer>
 
 </body>
