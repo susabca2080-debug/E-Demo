@@ -1,7 +1,22 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
 
+$cart_count = 0;
+if (isset($_SESSION['user_id'])) {
+    if (isset($cart_items) && is_array($cart_items)) {
+        $cart_count = count($cart_items);
+    } elseif (isset($conn) && $conn) {
+        $header_user_id = (int) $_SESSION['user_id'];
+        $count_sql = "SELECT COUNT(*) AS total_items FROM carts WHERE user_id = $header_user_id";
+        $count_result = mysqli_query($conn, $count_sql);
+        if ($count_result) {
+            $count_row = mysqli_fetch_assoc($count_result);
+            $cart_count = (int) ($count_row['total_items'] ?? 0);
+        }
+    }
+}
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -88,6 +103,27 @@
     color: #1f2a2f;
 }
 
+.cart-item-wrap {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .logout-btn,
 .dashboard-btn {
     border: 1px solid rgba(255, 255, 255, 0.22);
@@ -125,7 +161,12 @@
 
             <?php if (isset($_SESSION['user_email'])): ?>
                 <li class="welcome-chip">Welcome, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Guest'); ?></li>
-                <li><a class="cart-link" href="cart.php" title="View Cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li class="cart-item-wrap">
+                    <a class="cart-link" href="cart.php" title="View Cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    <span class="cart-count"><?php echo $_SESSION['cart_count'] ?? 0; ?></span>
+                </li>
                 <li><a class="dashboard-btn" href="admin/dashboard.php">Dashboard</a></li>
                 <li><a class="logout-btn" href="logout.php">Logout</a></li>
             <?php else: ?>
